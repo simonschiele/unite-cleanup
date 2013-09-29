@@ -20,7 +20,7 @@ let s:entry_format = {
 
 " call feedkeys('<Esc>')"
 function! s:unite_source.gather_candidates(args, context)
-    let updateHl = ' | call UpdateCleanupHighlite()' 
+    let updateHl = ' | call UpdateCleanupHighlite()'
     let g:unite_cleanup_apps = [
         \ {
             \ 'name': 'Remove Whitespaces',
@@ -29,6 +29,10 @@ function! s:unite_source.gather_candidates(args, context)
         \ },{
             \ 'name': 'Convert Tabs to Spaces',
             \ 'cmd': string('%s/\t/\ \ \ \ /g'),
+            \ 'type': 'replace'
+        \ },{
+            \ 'name': 'Fix Commas',
+            \ 'cmd': string('%s/ ,/,/g | %s/,\(\S\)/, \1/g'),
             \ 'type': 'replace'
         \ },{
             \ 'name': '[' . ( &ff != 'unix' ? s:entry_format['warning'] : '' ) . &ff . '] Convert to UNIX Linebreaks',
